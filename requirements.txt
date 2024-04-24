@@ -1,0 +1,2 @@
+flask==2.2.5
+flask-dotenv==0.1.2
