@@ -1,2 +1,2 @@
-flask==2.2.5
+flask==2.0.3
 flask-dotenv==0.1.2
