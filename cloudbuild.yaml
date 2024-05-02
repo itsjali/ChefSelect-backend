@@ -1,0 +1,8 @@
+steps:
+- name: 'gcr.io/cloud-builders/pip'
+  args: ['install', '-r', 'requirements.txt']
+
+# Add testing
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['app', 'deploy', 'app.yaml']
