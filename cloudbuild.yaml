@@ -1,6 +1,7 @@
 steps:
-- name: 'gcr.io/cloud-builders/pip'
-  args: ['install', '-r', 'requirements.txt']
+- name: 'python'
+  entrypoint: 'python'
+  args: ['-m', 'pip', 'install', '-r', 'requirements.txt']
 
 # Add testing
 
