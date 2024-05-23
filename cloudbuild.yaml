@@ -24,6 +24,13 @@ steps:
   env:
   - '_DATABASE_URL=$_DATABASE_URL' 
 
+- name: 'python'
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - |
+      flask db upgrade
+
 options:
   volumes:
     - name: 'pip-cache'
