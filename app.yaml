@@ -7,4 +7,4 @@ handlers:
   script: auto
 
 env_variables:
-  _DATABASE_URL: "postgresql://postgres:chefselectdb@chefselect-db.cl064ik6yj8q.eu-west-1.rds.amazonaws.com:5432/chefselect"
+  _DATABASE_URL: $_DATABASE_URL
