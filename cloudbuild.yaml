@@ -1,10 +1,31 @@
 steps:
+# Install requirements and run migrations
 - name: 'python'
-  entrypoint: 'python'
-  args: ['-m', 'pip', 'install', '-r', 'requirements.txt']
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - |
+      sed "s/blabla/$_DATABASE_URL/g" app.yaml > tmp_app.yaml && mv tmp_app.yaml app.yaml
+      cat app.yaml
+      pip install -r requirements.txt
+      flask db upgrade
 
 # Add testing
 
+# Deploy the application
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
-  args: ['-c', 'gcloud app deploy']
+  args:
+    - '-c'
+    - |
+      sed "s/blabla/$_DATABASE_URL/g" app.yaml > tmp_app.yaml && mv tmp_app.yaml app.yaml
+      cat app.yaml 
+      gcloud app deploy
+  env:
+  - '_DATABASE_URL=$_DATABASE_URL' 
+
+options:
+  volumes:
+    - name: 'pip-cache'
+      path: '/root/.cache/pip'
+

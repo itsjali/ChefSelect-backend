@@ -1,4 +1,7 @@
 flask==2.2.4
 flask-cors==4.0.0
 flask-dotenv==0.1.2
+Flask-Migrate==4.0.7
+Flask-SQLAlchemy
 gunicorn==21.2.0
+psycopg2==2.9.9
