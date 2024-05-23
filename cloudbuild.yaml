@@ -5,7 +5,6 @@ steps:
   args:
     - '-c'
     - |
-      sed "s/blabla/$_DATABASE_URL/g" app.yaml > tmp_app.yaml && mv tmp_app.yaml app.yaml
       cat app.yaml
       pip install -r requirements.txt
       flask db upgrade
@@ -18,11 +17,10 @@ steps:
   args:
     - '-c'
     - |
-      sed "s/blabla/$_DATABASE_URL/g" app.yaml > tmp_app.yaml && mv tmp_app.yaml app.yaml
       cat app.yaml 
       gcloud app deploy
   env:
-  - '_DATABASE_URL=$_DATABASE_URL' 
+  - '_POSTGRES_DB_URL=$__POSTGRES_DB_URL' 
 
 options:
   volumes:

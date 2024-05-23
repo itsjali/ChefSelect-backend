@@ -7,4 +7,4 @@ handlers:
   script: auto
 
 env_variables:
-  _DATABASE_URL: $_DATABASE_URL
+  POSTGRES_DB_URL: $_POSTGRES_DB_URL

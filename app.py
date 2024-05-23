@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:chefselectdb@chefselect-db.cl064ik6yj8q.eu-west-1.rds.amazonaws.com:5432/chefselect"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("POSTGRES_DB_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 CORS(app)
 
@@ -25,8 +25,7 @@ class Recipes(db.Model):
 
 @app.route('/')
 def test_endpoint():
-    url = os.getenv("_DATABASE_URL")
-    return f"Hello, welcome to my app {url}"
+    return f"Hello, welcome to my app"
 
 @app.route("/create-recipe", methods=["POST"])
 def create_recipe():
