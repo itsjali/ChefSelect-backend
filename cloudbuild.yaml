@@ -1,13 +1,12 @@
 steps:
-# Install requirements
+# Run tests
 - name: 'python'
   entrypoint: 'sh'
   args:
     - '-c'
     - |
-      pip install -r requirements.txt
-
-# Add testing
+      pip install -r requirements.txt && \
+      pytest tests/
 
 # Migrate and deploy the application
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
