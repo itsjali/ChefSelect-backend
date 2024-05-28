@@ -1,29 +1,22 @@
 steps:
-# Install requirements and run migrations
-- name: 'python'
-  entrypoint: 'sh'
-  args:
-    - '-c'
-    - |
-      cat app.yaml
-      pip install -r requirements.txt
-      flask db upgrade
-
 # Add testing
 
-# Deploy the application
+# Migrate and deploy the application
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
   args:
     - '-c'
     - |
-      cat app.yaml 
+      apt-get update && \
+      apt-get install -y gettext-base && \
+      pip install -r requirements.txt && \ 
+      envsubst < env_variables_template.yaml > substituted_env.yaml && \
+      flask db upgrade && \
       gcloud app deploy
   env:
-  - '_POSTGRES_DB_URL=$__POSTGRES_DB_URL' 
+    - 'POSTGRES_DB_URL=$_POSTGRES_DB_URL'
 
 options:
   volumes:
     - name: 'pip-cache'
       path: '/root/.cache/pip'
-

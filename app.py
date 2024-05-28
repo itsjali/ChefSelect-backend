@@ -45,4 +45,3 @@ def create_recipe():
     db.session.commit()
     
     return jsonify({"message": "Recipe successfully created", "recipe": {"id": new_recipe.id, "title": new_recipe.title, "description": new_recipe.description, "instructions": new_recipe.instructions}}), 201
-
