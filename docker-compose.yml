@@ -6,11 +6,12 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - .:/chefselect-backend
+      - .:/app
     env_file:
       - .env
     depends_on:
       - db
+    # command: sh -c "tail -f /dev/null"
     command: >
       sh -c 'flask db upgrade && flask run --host=0.0.0.0'
 
@@ -20,3 +21,16 @@ services:
       - .env
     ports:
       - "5432:5432"
+    environment:
+      POSTGRES_DB: chefselect-dev-db
+      POSTGRES_USER: chefselect
+      POSTGRES_PASSWORD: postgres
+
+  test_db:
+    image: postgres:13
+    ports:
+      - "5433:5432" 
+    environment:
+      POSTGRES_DB: chefselect-test-db
+      POSTGRES_USER: chefselect
+      POSTGRES_PASSWORD: postgres
