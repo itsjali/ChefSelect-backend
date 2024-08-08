@@ -2,8 +2,11 @@ from flask import Flask
 from flask_cors import CORS
 from flask_migrate import Migrate
 
+from app import models
 from app.config import Config
 from app.models import db
+from app.views import main_bp
+
 
 migrate = Migrate()
 
