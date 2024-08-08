@@ -20,14 +20,7 @@ steps:
       pip install -r requirements.txt && \
       envsubst < env_variables_template.yaml > substituted_env.yaml && \
       cat static_app.yaml substituted_env.yaml > app.yaml && \
-      echo "Checking current.." && \
-      flask db current
-      echo "Checking history.." && \
-      flask db history
-      PGPASSWORD='chefselectdb' psql -h chefselectdb@chefselect-db.cl064ik6yj8q.eu-west-1.rds.amazonaws.com -U postgres -d chefselect -c "DROP TABLE IF EXISTS alembic_version;"
-      echo "Starting real migration.." && \
       flask db migrate && \
-      echo "Migration Success.." && \
       flask db upgrade && \
       flask db stamp head && \\
       gcloud app deploy
