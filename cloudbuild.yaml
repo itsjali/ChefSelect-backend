@@ -1,18 +1,19 @@
 steps:
-# Start PostgreSQL, run tests, and clean up
-- name: 'gcr.io/cloud-builders/docker'
+# Create PostgresSQL, run tests and clean up
+- name: 'python'
   entrypoint: 'sh'
   args:
     - '-c'
     - |
-      pip install -r requirements.txt && \
+      apt-get update && \
+      apt-get install -y docker.io && \
+      service docker start && \
       docker run -d --name postgres-test -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=chefselect_test_db -p 5432:5432 postgres:13 && \
-      echo "Waiting for PostgreSQL to be ready..." && \
       until docker exec postgres-test pg_isready -U postgres; do
         sleep 1;
       done && \
-      export TEST_POSTGRES_DB_URL=postgresql://postgres:postgres@localhost:5432/chefselect_test_db && \
       export PYTHONPATH=/workspace && \
+      pip install -r requirements.txt && \
       pytest tests/ && \
       docker stop postgres-test && \
       docker rm postgres-test
