@@ -20,8 +20,12 @@ steps:
       pip install -r requirements.txt && \
       envsubst < env_variables_template.yaml > substituted_env.yaml && \
       cat static_app.yaml substituted_env.yaml > app.yaml && \
+      echo "POSTGRES_DB_URL is set to: $_POSTGRES_DB_URL" && \
+      echo "CHECKING DB CURRENT" && \
+      flask db current -v && \
       flask db stamp head && \
       flask db migrate && \
+      echo "MIGRATE FINISHED" && \
       flask db upgrade && \
       gcloud app deploy
   env:
