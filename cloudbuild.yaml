@@ -22,6 +22,7 @@ steps:
       cat static_app.yaml substituted_env.yaml > app.yaml && \
       flask db migrate && \
       flask db upgrade && \
+      flask db stamp head && \
       gcloud app deploy
   env:
     - 'POSTGRES_DB_URL=$_POSTGRES_DB_URL'
