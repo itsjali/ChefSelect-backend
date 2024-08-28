@@ -20,7 +20,6 @@ steps:
       pip install -r requirements.txt && \
       envsubst < env_variables_template.yaml > substituted_env.yaml && \
       cat static_app.yaml substituted_env.yaml > app.yaml && \
-      echo "Checking current database migration version..." && \
       flask db upgrade && \
       flask db stamp head && \
       gcloud app deploy
