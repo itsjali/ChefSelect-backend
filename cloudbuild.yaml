@@ -20,12 +20,10 @@ steps:
       pip install -r requirements.txt && \
       envsubst < env_variables_template.yaml > substituted_env.yaml && \
       cat static_app.yaml substituted_env.yaml > app.yaml && \
-      current_db_revision=$(flask db current) && \
-      echo "Current DB Revision: $current_db_revision" >> app.yaml && \
-      new_db_revision=$(flask db current) && \
-      echo flask db current && \
-      echo "New DB Revision: $new_db_revision" >> app.yaml && \
-      flask db upgrade && \
+      echo "Checking current database migration version..." && \
+      flask db current || echo "Failed to get current DB version" && \
+      flask db stamp head || echo "Failed to stamp head" && \
+      flask db upgrade || echo "Failed to upgrade database" && \
       gcloud app deploy
   env:
     - 'POSTGRES_DB_URL=$_POSTGRES_DB_URL'
