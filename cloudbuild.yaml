@@ -20,9 +20,11 @@ steps:
       pip install -r requirements.txt && \
       envsubst < env_variables_template.yaml > substituted_env.yaml && \
       cat static_app.yaml substituted_env.yaml > app.yaml && \
+      current_db_revision=$(flask db current) && \
+      echo "Current DB Revision: $current_db_revision" >> app.yaml && \
+      new_db_revision=$(flask db current) && \
       echo flask db current && \
-      flask db stamp head && \
-      echo flask db current && \
+      echo "New DB Revision: $new_db_revision" >> app.yaml && \
       flask db upgrade && \
       gcloud app deploy
   env:
