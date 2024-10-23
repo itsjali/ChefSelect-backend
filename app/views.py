@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from marshmallow import ValidationError
 
+from app.auth.decorators import token_required
 from app.schemas import RecipeSchema
 from app.services import create_recipe_service
 
@@ -8,6 +9,7 @@ main_bp = Blueprint("main", __name__)
 
 
 @main_bp.route("/create-recipe", methods=["POST"])
+@token_required
 def create_recipe():
     """
     Endpoint that receives data from the frontend 
