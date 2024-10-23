@@ -17,6 +17,8 @@ steps:
     - |
       apt-get update && \
       apt-get install -y gettext-base && \
+      python3 -m venv venv && \
+      . venv/bin/activate && \
       pip install -r requirements.txt && \
       envsubst < env_variables_template.yaml > substituted_env.yaml && \
       cat static_app.yaml substituted_env.yaml > app.yaml && \
