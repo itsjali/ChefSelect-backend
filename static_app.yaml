@@ -1,7 +1,7 @@
 runtime: python312
 env: standard
 
-entrypoint: gunicorn -b :$PORT app:app
+entrypoint: gunicorn -b :$PORT run:app
 
 handlers:
 - url: .*
