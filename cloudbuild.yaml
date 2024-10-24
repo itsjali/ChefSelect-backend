@@ -16,8 +16,8 @@ steps:
     - '-c'
     - |
       apt-get update && \
-      apt-get install -y  && \
-      pip install -r requirements.txt --break-system-packages && \
+      apt-get install -y libpq-dev && \
+      pip install -r requirements.txt && \
       echo ">>>>>>>>>>>>>>>>>>"
       envsubst < env_variables_template.yaml > substituted_env.yaml && \
       cat static_app.yaml substituted_env.yaml > app.yaml && \
