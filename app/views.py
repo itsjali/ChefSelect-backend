@@ -38,13 +38,12 @@ def get_recipes():
     """
     Endpoint that queries all recipes from the db and returned to the frontend. 
     """
-    return jsonify({"message": "Success"}), 200
-    # try:
-    #     schema = ExtendedRecipeDetailsSchema()
-    #     validated_data = schema.load()
+    try:
+        schema = ExtendedRecipeDetailsSchema()
+        validated_data = schema.load()
 
-    #     return jsonify({"message": "Success", "data": validated_data}), 200
+        return jsonify({"message": "Success", "data": validated_data}), 200
 
-    # except ValidationError as e:
-    #     return jsonify({"errors": e.messages}), 400
+    except ValidationError as e:
+        return jsonify({"errors": e.messages}), 400
  
