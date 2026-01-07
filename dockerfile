@@ -14,5 +14,4 @@ RUN pip install python-dotenv
 EXPOSE 5000
 
 ENV FLASK_APP=run.py
-ENV FLASK_ENV=development
 ENV FLASK_RUN_HOST=0.0.0.0
