@@ -9,7 +9,7 @@ main_bp = Blueprint("main", __name__)
 
 
 @main_bp.route("/create-recipe", methods=["POST"], endpoint="create_recipe")
-# @token_required
+@token_required
 def create_recipe():
     """
     Endpoint that creates the Recipe object using the data from the the frontend.
@@ -33,7 +33,7 @@ def create_recipe():
 
 
 @main_bp.route("/get-recipes", methods=["POST"], endpoint="get_recipes")
-# @token_required
+@token_required
 def get_recipes():
     """
     Endpoint that queries all recipes from the db and returned to the frontend. 

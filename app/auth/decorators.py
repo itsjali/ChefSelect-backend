@@ -1,15 +1,22 @@
 import jwt
 import os
 
-from flask import jsonify, request
+from flask import current_app, jsonify, request
 
 from app.models import User
 
-AUTH_SECRET_KEY = os.getenv("AUTH_SECRET_KEY") 
+
+APP_ENV = os.getenv("APP_ENV")
+AUTH_SECRET_KEY = os.getenv("AUTH_SECRET_KEY")
+BYPASS_TOKEN_AUTH = os.getenv("BYPASS_TOKEN_AUTH")
 
 
 def token_required(view):
     def wrapper(*args, **kwargs):
+        if APP_ENV != "production" and BYPASS_TOKEN_AUTH == "true":
+            current_app.logger.info("Bypassing Token Authentication")
+            return view(*args, **kwargs)
+        
         token = None
         if "Authorization" in request.headers:
             auth_header = request.headers["Authorization"]
