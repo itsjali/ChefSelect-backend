@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from marshmallow import ValidationError
 
 from app.auth.decorators import token_required
+from app.models import Recipe
 from app.schemas import RecipeDetailsSchema, ExtendedRecipeDetailsSchema
 from app.services import create_recipe_service
 
@@ -32,18 +33,12 @@ def create_recipe():
         return jsonify({"errors": e.messages}), 400
 
 
-@main_bp.route("/get-recipes", methods=["POST"], endpoint="get_recipes")
+@main_bp.route("/get-recipes", methods=["GET"], endpoint="get_recipes")
 @token_required
 def get_recipes():
     """
     Endpoint that queries all recipes from the db and returned to the frontend. 
     """
-    try:
-        schema = ExtendedRecipeDetailsSchema()
-        validated_data = schema.load()
-
-        return jsonify({"message": "Success", "data": validated_data}), 200
-
-    except ValidationError as e:
-        return jsonify({"errors": e.messages}), 400
- 
+    recipes = Recipe.query.all()
+    schema = ExtendedRecipeDetailsSchema(many=True)
+    return jsonify({"message": "Success", "data": schema.dump(recipes)}), 200
